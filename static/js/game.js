@@ -1,3 +1,6 @@
+
+import { questions } from "./questions.js";
+
 export class Game extends Phaser.Scene {
 
     constructor() {
@@ -32,6 +35,7 @@ export class Game extends Phaser.Scene {
 
 
     createPlayer(){
+        
 
         this.player = this.physics.add.sprite(200,100,"player");
         this.animationPlayer = this.anims.create({
@@ -42,8 +46,21 @@ export class Game extends Phaser.Scene {
         });
     }
 
+    createQuestion(){
+
+        let index = Phaser.Math.Between(0,3);
+        console.log(index);
+
+        this.question = questions[index];
+    }
+
     createCofre(){
 
+        this.createQuestion();
+
+        console.log("probando questions ",questions);
+
+        /*
         this.cofre = this.physics.add.sprite(300,200,"cofre").setImmovable();
         this.animationCofre = this.anims.create({
             key: "cofre-idle",
@@ -52,7 +69,26 @@ export class Game extends Phaser.Scene {
             repeat: -1 //infinite loops
         });
 
+        this.cofre.anims.play("cofre-idle",true); */
+
+        for(let i = 0; i < this.question.number; i++){
+
+            console.log("hablame");
+            let worldX = Phaser.Math.Between(0,750);
+            let worldY = Phaser.Math.Between(0,450);
+
+            this.cofre = this.physics.add.sprite(worldX,worldY,"cofre").setImmovable();
+            this.animationCofre = this.anims.create({
+            key: "cofre-idle",
+            frames: this.anims.generateFrameNumbers('cofre'),
+            frameRate: 2,
+            repeat: -1 //infinite loops
+        });
+
         this.cofre.anims.play("cofre-idle",true);
+
+
+        }
     }
 
     createFuego(){
@@ -98,7 +134,7 @@ export class Game extends Phaser.Scene {
        this.createCofre();
        this.createFuego();
        this.createEnemy();
-       
+
        this.player.setCollideWorldBounds(true);
        this.physics.add.collider(this.player,this.cofre);
        this.physics.add.collider(this.player,this.enemy);
