@@ -8,7 +8,11 @@ export class Game extends Phaser.Scene {
 
         this.load.image("background","images/terrain-test.png");
         this.load.image("gameover","images/gameover-test.png");
-        this.load.image("cofre","images/cofre-test.png");
+        //this.load.image("cofre","images/cofre-test.png");
+        this.load.spritesheet("cofre","animations/cofre-test-animation.png",{
+            frameWidth: 130,
+            frameHeight: 128
+        });
         //this.load.image("player","images/finder-pj-test-1.png");
         this.load.spritesheet("player","animations/finder-pj-run.png",{
             frameWidth: 120,
@@ -25,12 +29,22 @@ export class Game extends Phaser.Scene {
         this.gameoverImage = this.add.image(400,90,"gameover");
         this.gameoverImage.visible = false;
 
-        this.cofre = this.physics.add.image(100,30,"cofre").setImmovable( );
+        //this.cofre = this.physics.add.image(300,200,"cofre").setImmovable( );
+        this.cofre = this.physics.add.sprite(300,200,"cofre").setImmovable();
+        this.animationCofre = this.anims.create({
+            key: "cofre-idle",
+            frames: this.anims.generateFrameNumbers('cofre'),
+            frameRate: 2,
+            repeat: -1 //infinite loops
+        });
+
+        this.cofre.anims.play("cofre-idle",true);
+
+
 
        // this.player = this.physics.add.image(200,100,"player");
-        //this.player.setCollideWorldBounds(true);
+       //this.player = this.add.sprite(200,100,"player");
 
-        //this.player = this.add.sprite(200,100,"player");
         this.player = this.physics.add.sprite(200,100,"player");
         this.animationPlayer = this.anims.create({
             key: "pj-walk",
@@ -42,6 +56,7 @@ export class Game extends Phaser.Scene {
         //this.player.play("pj-walk");
     
 
+        this.player.setCollideWorldBounds(true);
         this.physics.add.collider(this.player,this.cofre);
 
         this.cursors = this.input.keyboard.createCursorKeys();
