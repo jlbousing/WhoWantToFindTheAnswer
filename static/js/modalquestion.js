@@ -11,7 +11,7 @@ export class ModalQuestion extends Phaser.Scene {
     }
 
     init(data){
-        console.log(data.data);
+        console.log(data);
     }
 
     preload(){

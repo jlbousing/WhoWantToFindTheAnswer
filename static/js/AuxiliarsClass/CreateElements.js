@@ -6,6 +6,7 @@ export class CreateElements {
     constructor(scene){
         this.relateScene = scene;
         this.relateScene.questionObject = new QuestionObject(this.relateScene);
+        this.relateScene.arrayCofres = [];
     }
 
     createPlayer(){
@@ -23,14 +24,18 @@ export class CreateElements {
     createCofre(){
 
         this.relateScene.questionObject.createQuestion();
+        
 
 
         this.relateScene.question.options.forEach((item) => {
-            console.log("hablame");
+            //this.relateScene.arrayCofres.push(this.relateScene.cofre);
+            //let indexCofre = this.relateScene.arrayCofres.length - 1;
+
             let worldX = Phaser.Math.Between(0,650);
             let worldY = Phaser.Math.Between(200,400);
 
             this.relateScene.cofre = this.relateScene.physics.add.sprite(worldX,worldY,"cofre").setImmovable();
+            this.relateScene.cofre.question = this.relateScene.question.question;
             this.relateScene.cofre.option = item;
             this.relateScene.animationCofre = this.relateScene.anims.create({
                 key: "cofre-idle",
@@ -44,8 +49,12 @@ export class CreateElements {
             this.relateScene.add.text(this.relateScene.cofre.x,this.relateScene.cofre.y - 60,`option ${item.option}`,
             { fontFamily: 'Arial', color: '#fff', backgroundColor: "#000", fontSize: 18 });
 
-            this.relateScene.physics.add.collider(this.relateScene.player,this.relateScene.cofre,
-                this.collisionPlayerCofre,null,this);
+            this.relateScene.physics.add.collider(this.relateScene.player,
+            this.relateScene.cofre,
+                this.collisionPlayerCofre,null,
+                { this: this, cofre: this.relateScene.cofre });
+
+            
         });
     }
 
@@ -77,10 +86,12 @@ export class CreateElements {
 
     collisionPlayerCofre(){
 
-        console.log("HEEY ",this.relateScene);
-        this.relateScene.scene.pause();
-        this.relateScene.scene.launch("ModalQuestion",{
-            data: "HEEEEY UYA"
+        console.log(this.cofre.option);
+
+        this.this.relateScene.scene.pause();
+        this.this.relateScene.scene.launch("ModalQuestion",{
+            question: this.cofre.question,
+            option: this.cofre.option
         });
     }
 
