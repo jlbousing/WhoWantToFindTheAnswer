@@ -3,6 +3,7 @@ import { questions } from "./questions.js";
 
 export class Game extends Phaser.Scene {
 
+    
     constructor() {
         super({ key: "game"});
     }
@@ -52,6 +53,8 @@ export class Game extends Phaser.Scene {
         console.log(index);
 
         this.question = questions[index];
+        this.titleQuestion = this.add.text(200,20,this.question.question,
+            { fontFamily: 'Arial', color: '#fff', backgroundColor: "#000", fontSize: 18 });
     }
 
     createCofre(){
@@ -60,35 +63,25 @@ export class Game extends Phaser.Scene {
 
         console.log("probando questions ",questions);
 
-        /*
-        this.cofre = this.physics.add.sprite(300,200,"cofre").setImmovable();
-        this.animationCofre = this.anims.create({
-            key: "cofre-idle",
-            frames: this.anims.generateFrameNumbers('cofre'),
-            frameRate: 2,
-            repeat: -1 //infinite loops
-        });
-
-        this.cofre.anims.play("cofre-idle",true); */
-
-        for(let i = 0; i < this.question.number; i++){
-
+        this.question.options.forEach((item) => {
             console.log("hablame");
-            let worldX = Phaser.Math.Between(0,750);
-            let worldY = Phaser.Math.Between(0,450);
+            let worldX = Phaser.Math.Between(0,650);
+            let worldY = Phaser.Math.Between(200,400);
 
             this.cofre = this.physics.add.sprite(worldX,worldY,"cofre").setImmovable();
+            this.cofre.answer = item.value;
             this.animationCofre = this.anims.create({
-            key: "cofre-idle",
-            frames: this.anims.generateFrameNumbers('cofre'),
-            frameRate: 2,
-            repeat: -1 //infinite loops
+                key: "cofre-idle",
+                frames: this.anims.generateFrameNumbers('cofre'),
+                frameRate: 2,
+                repeat: -1 //infinite loops
+            });
+
+            this.cofre.anims.play("cofre-idle",true);
+            console.log(this.cofre);
+            this.add.text(this.cofre.x,this.cofre.y - 60,`option ${item.option}`,
+            { fontFamily: 'Arial', color: '#fff', backgroundColor: "#000", fontSize: 18 });
         });
-
-        this.cofre.anims.play("cofre-idle",true);
-
-
-        }
     }
 
     createFuego(){
@@ -115,6 +108,12 @@ export class Game extends Phaser.Scene {
         });
 
         this.enemy.anims.play("lier-walk",true);
+    }
+
+    collisionPlayerCofre(){
+
+        this.scene.pause();
+        this.scene.launch("ModalQuestion",this.question)
     }
 
     

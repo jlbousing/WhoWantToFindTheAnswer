@@ -11,7 +11,7 @@ export const questions = [
         correct: "4"
     },
     {
-        question: "¿ Cómo se llama el libertado de Venezuela ?",
+        question: "¿ Cómo se llama el libertador de Venezuela ?",
         number: 4,
         options: [
             {option: "A", value: "Francisco de Miranda"},
