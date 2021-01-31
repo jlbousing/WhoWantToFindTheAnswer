@@ -44,15 +44,12 @@ export class Game extends Phaser.Scene {
     }
 
 
-    gameOver(){
-
-        alert("OHH NOOO :(");
-        this.scene.launch("gameover");
-    }
+    
 
     
     create(){
 
+     
         this.velocity = 100;
         
         this.add.image(400,250,"bg-terrain");
@@ -64,14 +61,14 @@ export class Game extends Phaser.Scene {
         
         this.player.setCollideWorldBounds(true);
     
-        this.physics.add.collider(this.player,this.enemy,this.gameOver,null,this);
+        
          this.cursors = this.input.keyboard.createCursorKeys();
         
     }
 
     enemyMove(){
 
-        console.log(this.enemy.x);
+        //console.log(this.enemy.x);
         
 
         if(this.enemy.x <= 0){
