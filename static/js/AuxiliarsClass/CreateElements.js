@@ -43,6 +43,9 @@ export class CreateElements {
             console.log(this.relateScene.cofre);
             this.relateScene.add.text(this.relateScene.cofre.x,this.relateScene.cofre.y - 60,`option ${item.option}`,
             { fontFamily: 'Arial', color: '#fff', backgroundColor: "#000", fontSize: 18 });
+
+            this.relateScene.physics.add.collider(this.relateScene.player,this.relateScene.cofre,
+                this.collisionPlayerCofre,null,this);
         });
     }
 
@@ -72,10 +75,13 @@ export class CreateElements {
         this.relateScene.enemy.anims.play("lier-walk",true);
     }
 
-    collisionPlayerCofre(cofre){
+    collisionPlayerCofre(){
 
+        console.log("HEEY ",this.relateScene);
         this.relateScene.scene.pause();
-        this.relateScene.scene.launch("ModalQuestion",this.relateScene.question,cofre.option);
+        this.relateScene.scene.launch("ModalQuestion",{
+            data: "HEEEEY UYA"
+        });
     }
 
 

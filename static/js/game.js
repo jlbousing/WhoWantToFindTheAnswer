@@ -22,7 +22,7 @@ export class Game extends Phaser.Scene {
         //this.load.image("cofre","images/cofre-test.png");
         this.load.spritesheet("cofre","animations/cofre-test-animation.png",{
             frameWidth: 130,
-            frameHeight: 128
+            frameHeight: 100
         });
         //this.load.image("player","images/finder-pj-test-1.png");
         this.load.spritesheet("player","animations/finder-pj-run.png",{
