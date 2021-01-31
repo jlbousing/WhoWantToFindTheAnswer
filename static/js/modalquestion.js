@@ -12,6 +12,9 @@ export class ModalQuestion extends Phaser.Scene {
 
     init(data){
         console.log(data);
+        this.question = data.question;
+        this.answer = data.option.value;
+        this.correct = data.correct;
     }
 
     preload(){
@@ -31,30 +34,38 @@ export class ModalQuestion extends Phaser.Scene {
             backgroundColor: "#000"
         });
 
-        this.add.text(200,200,`Answer: ${this.answer}, is correct or not ?`,{
+        this.add.text(100,250,`Answer: ${this.answer}, is correct or not ?`,{
             fontSize: 24,
             color: "#fff",
             fontFamily: "Arial",
             backgroundColor: "#000"
         });
 
-        const yesButton = this.add.text(200, 300, 'YES!', { fill: '#0f0' });
+        const yesButton = this.add.text(200, 400, 'YES!', { fill: '#0f0' });
         yesButton.setInteractive();
 
         yesButton.on('pointerdown', () => {
             
+            if(this.answer == this.correct){
+
+                alert("YOU WIN!!!");
+                window.location.reload();
+            }else{
+
+                this.scene.launch("gameover");
+            }
+            
+        },this);
+
+
+        const noButton = this.add.text(500, 400, 'NO', { fill: '#0f0' });
+        noButton.setInteractive();
+
+        noButton.on('pointerdown', () => { 
             console.log("clicked");
 
             this.scene.resume("game") 
             this.scene.stop();
-        },this);
-
-
-        const noButton = this.add.text(500, 300, 'NO', { fill: '#0f0' });
-        noButton.setInteractive();
-
-        noButton.on('pointerdown', () => { 
-            console.log("click in NO");
         },this);
     }
 

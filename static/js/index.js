@@ -1,10 +1,13 @@
 import { Game } from "./game.js";
 import { ModalQuestion } from "./modalquestion.js"
+import { GameOver } from "./gameover.js";
+
+
 const config = {
     type: Phaser.AUTO,
     width: 800,
     height: 500,
-    scene: [Game, ModalQuestion],
+    scene: [Game, ModalQuestion, GameOver],
     physics: {
         default: "arcade",
         arcade: {

@@ -37,6 +37,7 @@ export class CreateElements {
             this.relateScene.cofre = this.relateScene.physics.add.sprite(worldX,worldY,"cofre").setImmovable();
             this.relateScene.cofre.question = this.relateScene.question.question;
             this.relateScene.cofre.option = item;
+            this.relateScene.cofre.correct = this.relateScene.question.correct;
             this.relateScene.animationCofre = this.relateScene.anims.create({
                 key: "cofre-idle",
                 frames: this.relateScene.anims.generateFrameNumbers('cofre'),
@@ -91,7 +92,8 @@ export class CreateElements {
         this.this.relateScene.scene.pause();
         this.this.relateScene.scene.launch("ModalQuestion",{
             question: this.cofre.question,
-            option: this.cofre.option
+            option: this.cofre.option,
+            correct: this.cofre.correct
         });
     }
 
