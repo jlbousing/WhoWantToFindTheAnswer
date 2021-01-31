@@ -18,6 +18,16 @@ export class Game extends Phaser.Scene {
             frameWidth: 120,
             frameHeight: 100
         });
+
+        this.load.spritesheet("enemy","animations/lier-animation.png",{
+            frameWidth: 120,
+            frameHeight: 100
+        });
+
+        this.load.spritesheet("fuego","animations/fuego-animation.png",{
+            frameWidth: 120,
+            frameHeight: 100
+        });
     }
 
     create(){
@@ -41,6 +51,17 @@ export class Game extends Phaser.Scene {
         this.cofre.anims.play("cofre-idle",true);
 
 
+        this.cofre = this.physics.add.sprite(500,200,"fuego").setImmovable();
+        this.animationCofre = this.anims.create({
+            key: "fuego",
+            frames: this.anims.generateFrameNumbers('fuego'),
+            frameRate: 2,
+            repeat: -1 //infinite loops
+        });
+
+        this.cofre.anims.play("fuego",true);
+
+
 
        // this.player = this.physics.add.image(200,100,"player");
        //this.player = this.add.sprite(200,100,"player");
@@ -53,11 +74,20 @@ export class Game extends Phaser.Scene {
             repeat: -1 //infinite loops
         });
 
-        //this.player.play("pj-walk");
+        this.enemy = this.physics.add.sprite(400,400,"enemy");
+        this.animationPlayer = this.anims.create({
+            key: "lier-walk",
+            frames: this.anims.generateFrameNumbers('enemy'),
+            frameRate: 10,
+            repeat: -1 //infinite loops
+        });
+
+        this.enemy.anims.play("lier-walk",true);
     
 
         this.player.setCollideWorldBounds(true);
         this.physics.add.collider(this.player,this.cofre);
+        this.physics.add.collider(this.player,this.enemy);
 
         this.cursors = this.input.keyboard.createCursorKeys();
 
