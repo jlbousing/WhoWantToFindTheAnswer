@@ -83,6 +83,7 @@ export class CreateElements {
         });
 
         this.relateScene.enemy.anims.play("lier-walk",true);
+        this.relateScene.enemy.setVelocityX(this.relateScene.velocity);
     }
 
     collisionPlayerCofre(){
