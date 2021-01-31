@@ -1,11 +1,18 @@
 
-import { questions } from "./questions.js";
+//import { QuestionObject } from "./AuxiliarsClass/QuestionObject.js";
+import { CreateElements } from "./AuxiliarsClass/CreateElements.js";
+
 
 export class Game extends Phaser.Scene {
 
     
     constructor() {
         super({ key: "game"});
+    }
+
+    init(){
+        //this.questionObject = new QuestionObject(this);
+        this.createElements = new CreateElements(this);
     }
 
     preload(){
@@ -34,88 +41,6 @@ export class Game extends Phaser.Scene {
         });
     }
 
-
-    createPlayer(){
-        
-
-        this.player = this.physics.add.sprite(200,100,"player");
-        this.animationPlayer = this.anims.create({
-            key: "pj-walk",
-            frames: this.anims.generateFrameNumbers('player'),
-            frameRate: 10,
-            repeat: -1 //infinite loops
-        });
-    }
-
-    createQuestion(){
-
-        let index = Phaser.Math.Between(0,3);
-        console.log(index);
-
-        this.question = questions[index];
-        this.titleQuestion = this.add.text(200,20,this.question.question,
-            { fontFamily: 'Arial', color: '#fff', backgroundColor: "#000", fontSize: 18 });
-    }
-
-    createCofre(){
-
-        this.createQuestion();
-
-        console.log("probando questions ",questions);
-
-        this.question.options.forEach((item) => {
-            console.log("hablame");
-            let worldX = Phaser.Math.Between(0,650);
-            let worldY = Phaser.Math.Between(200,400);
-
-            this.cofre = this.physics.add.sprite(worldX,worldY,"cofre").setImmovable();
-            this.cofre.answer = item.value;
-            this.animationCofre = this.anims.create({
-                key: "cofre-idle",
-                frames: this.anims.generateFrameNumbers('cofre'),
-                frameRate: 2,
-                repeat: -1 //infinite loops
-            });
-
-            this.cofre.anims.play("cofre-idle",true);
-            console.log(this.cofre);
-            this.add.text(this.cofre.x,this.cofre.y - 60,`option ${item.option}`,
-            { fontFamily: 'Arial', color: '#fff', backgroundColor: "#000", fontSize: 18 });
-        });
-    }
-
-    createFuego(){
-
-        this.fuego = this.physics.add.sprite(500,200,"fuego").setImmovable();
-        this.animationCofre = this.anims.create({
-            key: "fuego",
-            frames: this.anims.generateFrameNumbers('fuego'),
-            frameRate: 2,
-            repeat: -1 //infinite loops
-        });
-
-        this.fuego.anims.play("fuego",true);
-    }
-
-    createEnemy(){
-
-        this.enemy = this.physics.add.sprite(400,400,"enemy");
-        this.animationPlayer = this.anims.create({
-            key: "lier-walk",
-            frames: this.anims.generateFrameNumbers('enemy'),
-            frameRate: 10,
-            repeat: -1 //infinite loops
-        });
-
-        this.enemy.anims.play("lier-walk",true);
-    }
-
-    collisionPlayerCofre(){
-
-        this.scene.pause();
-        this.scene.launch("ModalQuestion",this.question)
-    }
-
     
     create(){
 
@@ -123,21 +48,13 @@ export class Game extends Phaser.Scene {
         this.add.image(400,250,"background");
         this.gameoverImage = this.add.image(400,90,"gameover");
         this.gameoverImage.visible = false;
-
-        //this.cofre = this.physics.add.image(300,200,"cofre").setImmovable( );
-       // this.player = this.physics.add.image(200,100,"player");
-       //this.player = this.add.sprite(200,100,"player");
-
         
-       this.createPlayer();
-       this.createCofre();
-       this.createFuego();
-       this.createEnemy();
-
-       this.player.setCollideWorldBounds(true);
-       this.physics.add.collider(this.player,this.cofre);
-       this.physics.add.collider(this.player,this.enemy);
-       this.cursors = this.input.keyboard.createCursorKeys();
+        this.createElements.run();
+        
+        this.player.setCollideWorldBounds(true);
+    
+        this.physics.add.collider(this.player,this.enemy);
+         this.cursors = this.input.keyboard.createCursorKeys();
         this.velocity = 100;
     }
 

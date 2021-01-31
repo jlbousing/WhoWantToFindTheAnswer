@@ -3,7 +3,7 @@ import { questions } from "./questions";
 export class ModalQuestion extends Phaser.Scene {
 
 
-    constructor(question, answer, correctAnswer){
+    constructor(question,answer){
         super({key: "ModalQuestion"});
         this.question = question;
         this.answer = answer;
