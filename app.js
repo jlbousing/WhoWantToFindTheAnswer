@@ -1,10 +1,10 @@
 var express = require("express");
 var app = express();
+const PORT = 3000;
 
-app.get("/",() => {
-    console.log("hello uya");
-});
+app.use(express.static(__dirname + '/static'));
 
-app.listen(3000, () => {
+
+app.listen(PORT, () => {
     console.log("sirviendo app en puerto 3000");
 });
